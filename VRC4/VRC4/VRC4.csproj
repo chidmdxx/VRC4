@@ -67,6 +67,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Helper.cs" />
+    <Compile Include="Model\RC4.cs" />
+    <Compile Include="Model\Vigenere.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
