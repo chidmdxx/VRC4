@@ -38,7 +38,7 @@ namespace VRC4.Model
 
         }
 
-        public void Cipher(string plaintext)
+        public void Cipher(string plaintext, int Slength=256)
         {
             Plaintext = plaintext;
             Ciphertext = string.Empty;
@@ -46,19 +46,19 @@ namespace VRC4.Model
             byte[] plainBytes = Encoding.ASCII.GetBytes(Plaintext);
             byte[] K = Encoding.ASCII.GetBytes(Key);
             int keyLenght = K.Length;
-            byte[] S = new byte[256];
-            byte[] T = new byte[256];
+            byte[] S = new byte[Slength];
+            byte[] T = new byte[Slength];
             byte[] cipherBytes = new byte[plainBytes.Length];
             int j, i;
             /*Initialization*/
-            for (var c = 0; c < 256; c++)
+            for (var c = 0; c < Slength; c++)
             {
                 S[c] = (byte)(c);
                 T[c] = K[c % keyLenght];
             }
             /*Initial permutation of S*/
             j = 0;
-            for (var c = 0; c < 256; c++)
+            for (var c = 0; c < Slength; c++)
             {
                 j = (j + S[c] + T[c]) % 256;
                 byte temp = S[c];//swap (S[c], S[j]);
