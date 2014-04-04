@@ -52,17 +52,13 @@ namespace VRC4.Model
             {
                 int ascii = letter;
                 int k;
-                if (ascii >= 97 && ascii <= 122)
-                {
-                    k = keyBytes[count++ % keyLenght];
-                    k -= 97;
-                    ascii -= 97;
-                    ascii += k;
-                    ascii %= 26;
-                    ascii += 97;
-                    Ciphertext = Ciphertext + (char)ascii;
-                    Work += string.Format("{0}. Replaced {1} for {2} with key letter {3} \n", count, (char)letter, (char)ascii, (char)(k + 97));
-                }
+                k = keyBytes[count++ % keyLenght];
+                ascii += k;
+                ascii %= 256;
+
+                Ciphertext = Ciphertext + (char)ascii;
+                Work += string.Format("{0}. Replaced {1} for {2} with key letter {3} \n", count, (char)letter, (char)ascii, (char)(k + 97));
+
             }
             return Ciphertext;
         }
@@ -83,12 +79,9 @@ namespace VRC4.Model
                 if (ascii >= 97 && ascii <= 122)
                 {
                     k = keyBytes[count++ % keyLenght];
-                    k -= 97;
-                    ascii -= 97;
-                    ascii += 26;
+                    ascii += 256;
                     ascii -= k;
-                    ascii %= 26;
-                    ascii += 97;
+                    ascii %= 256;
                     Plaintext = Plaintext + (char)ascii;
                     Work += string.Format("{0}. Replaced {1} for {2} with key letter {3} \n", count, (char)letter, (char)ascii, (char)(k + 97));
                 }

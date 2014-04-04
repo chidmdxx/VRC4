@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
@@ -17,8 +18,10 @@
         <TextBox Grid.Column="1" Grid.Row="0" Name="textBox"/>
         <TextBlock Grid.Column="0" Grid.Row="1" Text="Key: "/>
         <TextBox Grid.Column="1" Grid.Row="1" Name="keyBox"/>
-        <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Name="Work"/>
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right">
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="J: "/>
+        <TextBox Grid.Column="1" Grid.Row="2" Name="jBox"/>
+        <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Name="Work"/>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right">
             <Button Name="Cipher" Click="Cipher_Click">
                 Cipher
             </Button>
