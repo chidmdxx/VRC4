@@ -24,5 +24,15 @@ namespace VRC4
         {
             InitializeComponent();
         }
+
+        private void Cipher_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Decipher_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

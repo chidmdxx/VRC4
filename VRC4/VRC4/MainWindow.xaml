@@ -3,6 +3,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="Text: "/>
+        <TextBox Grid.Column="1" Grid.Row="0" Name="textBox"/>
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Key: "/>
+        <TextBox Grid.Column="1" Grid.Row="1" Name="keyBox"/>
+        <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Name="Work"/>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right">
+            <Button Name="Cipher" Click="Cipher_Click">
+                Cipher
+            </Button>
+            <Button Name="Decipher" Click="Decipher_Click">
+                Decipher
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>
