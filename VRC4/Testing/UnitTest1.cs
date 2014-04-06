@@ -16,7 +16,7 @@ namespace Testing
             var test = new RC4() { Key=key};
             test.Cipher(Encoding.ASCII.GetBytes(M),4);
 
-            Assert.AreEqual("4B48", test.Plaintext.ByteArrayToStringValue(), true);
+            Assert.AreEqual("4B48", test.Ciphertext.ByteArrayToStringValue(), true);
         }
     }
 }

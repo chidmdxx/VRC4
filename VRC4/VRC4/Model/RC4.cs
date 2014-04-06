@@ -52,7 +52,7 @@ namespace VRC4.Model
             /*Initial permutation of S*/
             InitialPermutation(ref S, ref T, Slength);
             /*Stream Generation*/
-            StreamGeneration(ref ciphertext, ref S, Plaintext);
+            StreamGeneration(ref ciphertext, ref S, Plaintext, Slength);
         }
         public void Decipher(byte[] ciphertext, int Slength = 256)
         {
@@ -69,7 +69,7 @@ namespace VRC4.Model
             /*Initial permutation of S*/
             InitialPermutation(ref S, ref T, Slength);
             /*Stream Generation*/
-            StreamGeneration(ref plaintext, ref S, Ciphertext);
+            StreamGeneration(ref plaintext, ref S, Ciphertext, Slength);
         }
 
 
@@ -89,7 +89,7 @@ namespace VRC4.Model
             int j = 0;
             for (var c = 0; c < Slength; c++)
             {
-                j = (j + S[c] + T[c]) % 256;
+                j = (j + S[c] + T[c]) % Slength;
                 byte temp = S[c];//swap (S[c], S[j]);
                 S[c] = S[j];
                 S[j] = temp;
@@ -97,19 +97,19 @@ namespace VRC4.Model
             }
         }
 
-        public void StreamGeneration(ref byte[] resultBytes,ref byte[] S, byte[] workBytes)
+        public void StreamGeneration(ref byte[] resultBytes, ref byte[] S, byte[] workBytes, int Slength)
         {
             int i = 0;
             int j = 0;
             int count = 0;
             foreach (var Mi in workBytes)
             {
-                i = (i + 1) % 256;
-                j = (j + S[i]) % 256;
+                i = (i + 1) % Slength;
+                j = (j + S[i]) % Slength;
                 byte temp = S[i];//swap (S[i], S[j]);
                 S[i] = S[j];
                 S[j] = temp;
-                int t = (S[i] + S[j]) % 256;
+                int t = (S[i] + S[j]) % Slength;
                 byte k = S[t];
                 resultBytes[count++] = (byte)(Mi ^ k);
             }
