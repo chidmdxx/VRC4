@@ -4,23 +4,23 @@ namespace VRC4.Model
 {
     class Vigenere
     {
-        private string key;
+        private byte[] key;
 
-        public string Key
+        public byte[] Key
         {
             get { return key; }
             set { key = value; }
         }
-        private string plaintext;
+        private byte[] plaintext;
 
-        public string Plaintext
+        public byte[] Plaintext
         {
             get { return plaintext; }
             set { plaintext = value; }
         }
-        private string ciphertext;
+        private byte[] ciphertext;
 
-        public string Ciphertext
+        public byte[] Ciphertext
         {
             get { return ciphertext; }
             set { ciphertext = value; }
@@ -39,54 +39,49 @@ namespace VRC4.Model
         {
         }
 
-        public string Cipher(string plaintext)
+        public byte[] Cipher(byte[] plaintext)
         {
             Plaintext = plaintext;
-            Ciphertext = string.Empty;
+            Ciphertext = new byte[plaintext.Length];
             Work = string.Empty;
-            byte[] plainBytes = Encoding.ASCII.GetBytes(Plaintext);
-            byte[] keyBytes = Encoding.ASCII.GetBytes(Key);
-            int keyLenght = keyBytes.Length;
+            int keyLenght = key.Length;
             int count = 0;
-            foreach (var letter in plainBytes)
+            foreach (var letter in plaintext)
             {
                 int ascii = letter;
                 int k;
-                k = keyBytes[count++ % keyLenght];
+                k = key[count % keyLenght];
                 ascii += k;
                 ascii %= 256;
 
-                Ciphertext = Ciphertext + (char)ascii;
-                Work += string.Format("{0}. Replaced {1} for {2} with key letter {3} \n", count, (char)letter, (char)ascii, (char)(k + 97));
+                Ciphertext[count++] = (byte)ascii;
+                Work += string.Format("{0}. Replaced {1} for {2} with key letter {3} \n", count, letter.ToString(), ((byte)ascii).ToString(), k.ToString());
 
             }
             return Ciphertext;
         }
 
-        public string Decipher(string ciphertext)
+        public byte[] Decipher(byte[] ciphertext)
         {
             Ciphertext = ciphertext;
-            Plaintext = string.Empty;
+            plaintext = new byte[ciphertext.Length];
             Work = string.Empty;
-            byte[] cipherBytes = Encoding.ASCII.GetBytes(Ciphertext);
-            byte[] keyBytes = Encoding.ASCII.GetBytes(Key);
-            int keyLenght = keyBytes.Length;
+            int keyLenght = key.Length;
             int count = 0;
-            foreach (var letter in cipherBytes)
+            foreach (var letter in ciphertext)
             {
                 int ascii = letter;
                 int k;
-                if (ascii >= 97 && ascii <= 122)
-                {
-                    k = keyBytes[count++ % keyLenght];
-                    ascii += 256;
-                    ascii -= k;
-                    ascii %= 256;
-                    Plaintext = Plaintext + (char)ascii;
-                    Work += string.Format("{0}. Replaced {1} for {2} with key letter {3} \n", count, (char)letter, (char)ascii, (char)(k + 97));
-                }
+                k = key[count % keyLenght];
+                ascii += k;
+                ascii += 256;
+                ascii %= 256;
+
+                plaintext[count++] = (byte)ascii;
+                Work += string.Format("{0}. Replaced {1} for {2} with key letter {3} \n", count, letter.ToString(), ((byte)ascii).ToString(), k.ToString());
+
             }
-            return Plaintext;
+            return plaintext;
         }
     }
 }

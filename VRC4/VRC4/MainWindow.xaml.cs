@@ -29,10 +29,15 @@ namespace VRC4
         private void Cipher_Click(object sender, RoutedEventArgs e)
         {
             int j=int.Parse(jBox.Text);
-            string c1 = textBox.Text.Substring(0, j + 1);
-            string c2 = textBox.Text.Substring(j + 1);
-            string k1 = keyBox.Text.Substring(0, j + 1);
-            string k2 = keyBox.Text.Substring(j + 1);
+            string c1Text = textBox.Text.Substring(0, j);
+            string c2Text = textBox.Text.Substring(j );
+            string k1Text = keyBox.Text.Substring(0, j);
+            string k2Text = keyBox.Text.Substring(j );
+
+            byte[] c1 = Encoding.ASCII.GetBytes(c1Text);
+            byte[] c2 = Encoding.ASCII.GetBytes(c2Text);
+            byte[] k1 = Encoding.ASCII.GetBytes(k1Text);
+            byte[] k2 = Encoding.ASCII.GetBytes(k2Text);
 
             string ciphertext;
 
@@ -50,7 +55,9 @@ namespace VRC4
             vigenere.Cipher(c2);
             c2 = vigenere.Ciphertext;
 
-            ciphertext = c1 + c2 + j;
+
+            ciphertext = c1.ByteArrayToStringValue() + c2.ByteArrayToStringValue() + ((byte)j).ByteArrayToStringValue();
+
             Work.Text = ciphertext;
         }
 

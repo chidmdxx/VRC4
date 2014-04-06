@@ -8,22 +8,22 @@ namespace VRC4.Model
 {
     public class RC4
     {
-        private string key;
-        private string plaintext;
-        private string ciphertext;
+        private byte[] key;
+        private byte[] plaintext;
+        private byte[] ciphertext;
         private string work;
 
-        public string Key
+        public byte[] Key
         {
             get { return key; }
             set { key = value; }
         }
-        public string Plaintext
+        public byte[] Plaintext
         {
             get { return plaintext; }
             set { plaintext = value; }
         }
-        public string Ciphertext
+        public byte[] Ciphertext
         {
             get { return ciphertext; }
             set { ciphertext = value; }
@@ -38,61 +38,49 @@ namespace VRC4.Model
 
         }
 
-        public void Cipher(string plaintext, int Slength=256)
+        public void Cipher(byte[] plaintext, int Slength = 256)
         {
             Plaintext = plaintext;
-            Ciphertext = string.Empty;
+            Ciphertext = new byte[plaintext.Length];
             Work = string.Empty;
-            byte[] plainBytes = Encoding.ASCII.GetBytes(Plaintext);
 
             byte[] S = new byte[Slength];
             byte[] T = new byte[Slength];
-            byte[] resultBytes = new byte[plainBytes.Length];
 
             /*Initialization*/
             Initialization(ref S, ref T, Slength);
             /*Initial permutation of S*/
             InitialPermutation(ref S, ref T, Slength);
             /*Stream Generation*/
-            StreamGeneration(ref resultBytes, ref S, plainBytes);
-            foreach (var b in resultBytes)
-            {
-                Ciphertext += (char)b;
-            }
+            StreamGeneration(ref ciphertext, ref S, Plaintext);
         }
-        public void Decipher(string ciphertext, int Slength = 256)
+        public void Decipher(byte[] ciphertext, int Slength = 256)
         {
             Ciphertext = ciphertext;
-            Plaintext = string.Empty;
+            Plaintext = new byte[ciphertext.Length];
             Work = string.Empty;
-            byte[] cipherBytes = Encoding.ASCII.GetBytes(Ciphertext);
 
             byte[] S = new byte[Slength];
             byte[] T = new byte[Slength];
-            byte[] resultBytes = new byte[cipherBytes.Length];
+
 
             /*Initialization*/
             Initialization(ref S, ref T, Slength);
             /*Initial permutation of S*/
             InitialPermutation(ref S, ref T, Slength);
             /*Stream Generation*/
-            StreamGeneration(ref resultBytes, ref S, cipherBytes);
-            foreach (var b in resultBytes)
-            {
-                Ciphertext += (char)b;
-            }
+            StreamGeneration(ref plaintext, ref S, Ciphertext);
         }
 
 
 
         public void Initialization(ref byte[] S, ref byte[] T, int Slength)
         {
-            byte[] K = Encoding.ASCII.GetBytes(Key);
-            int keyLenght = K.Length;
+            int keyLenght = Key.Length;
             for (var c = 0; c < Slength; c++)
             {
                 S[c] = (byte)(c);
-                T[c] = K[c % keyLenght];
+                T[c] = Key[c % keyLenght];
             }
         }
 

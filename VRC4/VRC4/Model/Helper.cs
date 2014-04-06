@@ -139,6 +139,13 @@ namespace VRC4.Model
             string hex = BitConverter.ToString(bytes);
             return hex.Replace("-", "");
         }
+
+        public static string ByteArrayToStringValue(this byte bytes)
+        {
+            byte[] temp ={bytes};
+            string hex = BitConverter.ToString(temp);
+            return hex.Replace("-", "");
+        }
         public static string ByteArrayToString(this byte[] bytes)
         {
             var builder = new StringBuilder();
