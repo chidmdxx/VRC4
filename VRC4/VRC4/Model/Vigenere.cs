@@ -26,14 +26,15 @@ namespace VRC4.Model
             int count = 0;
             foreach (var letter in plaintext)
             {
-                int ascii = letter;
+                int ascii = letter; //el foreach no permite el modificar el valor letter
                 int k;
-                k = Key[count % keyLenght];
+                k = Key[count % keyLenght];//valor de la llave en la que vamos
                 ascii += k;
-                ascii %= 256;
+                ascii %= 256; //byte
 
                 Ciphertext[count++] = (byte)ascii;
-                Work += string.Format("{0}. Replaced {1} for {2} with key letter {3} \n", count, letter.ToString(), ((byte)ascii).ToString(), k.ToString());
+                Work += string.Format("{0}. Replaced {1} for {2} with key letter {3} \n", count, letter.ToString(),
+                    ((byte)ascii).ToString(), k.ToString());
 
             }
             return Ciphertext;
@@ -56,7 +57,8 @@ namespace VRC4.Model
                 ascii %= 256;
 
                 Plaintext[count++] = (byte)ascii;
-                Work += string.Format("{0}. Replaced {1} for {2} with key letter {3} \n", count, letter.ToString(), ((byte)ascii).ToString(), k.ToString());
+                Work += string.Format("{0}. Replaced {1} for {2} with key letter {3} \n", count, letter.ToString(),
+                    ((byte)ascii).ToString(), k.ToString());
 
             }
             return Plaintext;

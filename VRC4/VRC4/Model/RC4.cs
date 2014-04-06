@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace VRC4.Model
 {
     public class RC4
     {
 
         public byte[] Key { get; set; }
-        public byte[] Plaintext        { get; set; }
+        public byte[] Plaintext { get; set; }
         public byte[] Ciphertext { get; set; }
         public string Work { get; set; }
         public RC4()
@@ -55,12 +50,13 @@ namespace VRC4.Model
 
 
         public void Initialization(ref byte[] S, ref byte[] T, int Slength)
+        //hace la inicializacin de los valores s y t usando sus referencias
         {
             int keyLenght = Key.Length;
             for (var c = 0; c < Slength; c++)
             {
-                S[c] = (byte)(c);
-                T[c] = Key[c % keyLenght];
+                S[c] = (byte)(c); //llena del 0 al 255
+                T[c] = Key[c % keyLenght]; //llena con la llave
             }
         }
 
@@ -91,7 +87,7 @@ namespace VRC4.Model
                 S[j] = temp;
                 int t = (S[i] + S[j]) % Slength;
                 byte k = S[t];
-                resultBytes[count++] = (byte)(Mi ^ k);
+                resultBytes[count++] = (byte)(Mi ^ k); //guarda el xor
             }
         }
     }
