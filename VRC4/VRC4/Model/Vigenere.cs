@@ -73,7 +73,7 @@ namespace VRC4.Model
                 int ascii = letter;
                 int k;
                 k = key[count % keyLenght];
-                ascii += k;
+                ascii -= k;
                 ascii += 256;
                 ascii %= 256;
 
