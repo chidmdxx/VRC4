@@ -8,31 +8,11 @@ namespace VRC4.Model
 {
     public class RC4
     {
-        private byte[] key;
-        private byte[] plaintext;
-        private byte[] ciphertext;
-        private string work;
 
-        public byte[] Key
-        {
-            get { return key; }
-            set { key = value; }
-        }
-        public byte[] Plaintext
-        {
-            get { return plaintext; }
-            set { plaintext = value; }
-        }
-        public byte[] Ciphertext
-        {
-            get { return ciphertext; }
-            set { ciphertext = value; }
-        }
-        public string Work
-        {
-            get { return work; }
-            set { work = value; }
-        }
+        public byte[] Key { get; set; }
+        public byte[] Plaintext        { get; set; }
+        public byte[] Ciphertext { get; set; }
+        public string Work { get; set; }
         public RC4()
         {
 
@@ -52,7 +32,7 @@ namespace VRC4.Model
             /*Initial permutation of S*/
             InitialPermutation(ref S, ref T, Slength);
             /*Stream Generation*/
-            StreamGeneration(ref ciphertext, ref S, Plaintext, Slength);
+            StreamGeneration(Ciphertext, ref S, Plaintext, Slength);
         }
         public void Decipher(byte[] ciphertext, int Slength = 256)
         {
@@ -69,7 +49,7 @@ namespace VRC4.Model
             /*Initial permutation of S*/
             InitialPermutation(ref S, ref T, Slength);
             /*Stream Generation*/
-            StreamGeneration(ref plaintext, ref S, Ciphertext, Slength);
+            StreamGeneration(Plaintext, ref S, Ciphertext, Slength);
         }
 
 
@@ -97,7 +77,7 @@ namespace VRC4.Model
             }
         }
 
-        public void StreamGeneration(ref byte[] resultBytes, ref byte[] S, byte[] workBytes, int Slength)
+        public void StreamGeneration(byte[] resultBytes, ref byte[] S, byte[] workBytes, int Slength)
         {
             int i = 0;
             int j = 0;
