@@ -28,11 +28,11 @@ namespace VRC4
 
         private void Cipher_Click(object sender, RoutedEventArgs e)
         {
-            int j=int.Parse(jBox.Text);
+            int j = int.Parse(jBox.Text);
             string c1Text = textBox.Text.Substring(0, j);
-            string c2Text = textBox.Text.Substring(j );
+            string c2Text = textBox.Text.Substring(j);
             string k1Text = keyBox.Text.Substring(0, j);
-            string k2Text = keyBox.Text.Substring(j );
+            string k2Text = keyBox.Text.Substring(j);
 
             byte[] c1 = Encoding.ASCII.GetBytes(c1Text);
             byte[] c2 = Encoding.ASCII.GetBytes(c2Text);
@@ -63,7 +63,41 @@ namespace VRC4
 
         private void Decipher_Click(object sender, RoutedEventArgs e)
         {
+            int j = 0;
+            List<byte> allBytes = textBox.Text.StringToByteArray().ToList();
+            jBox.Text = "";
+            j = allBytes[allBytes.Count - 1];
+            allBytes.RemoveAt(allBytes.Count - 1);
+            //string c1Text = textBox.Text.Substring(0, j);
+            //string c2Text = textBox.Text.Substring(j);
+            string k1Text = keyBox.Text.Substring(0, j);
+            string k2Text = keyBox.Text.Substring(j);
 
+            byte[] c1 = allBytes.Take(j).ToArray();
+            byte[] c2 = allBytes.Skip(j).Take(allBytes.Count - j).ToArray();
+            byte[] k1 = Encoding.ASCII.GetBytes(k1Text);
+            byte[] k2 = Encoding.ASCII.GetBytes(k2Text);
+
+            string ciphertext;
+
+            var rc4 = new RC4() { Key = k1 };
+            var vigenere = new Vigenere() { Key = k1 };
+            rc4.Decipher(c1);
+            c1 = rc4.Plaintext;
+            vigenere.Decipher(c1);
+            c1 = vigenere.Plaintext;
+
+            rc4.Key = k2;
+            vigenere.Key = k2;
+            rc4.Decipher(c2);
+            c2 = rc4.Plaintext;
+            vigenere.Decipher(c2);
+            c2 = vigenere.Plaintext;
+
+
+            ciphertext = c1.ByteArrayToStringValue() + c2.ByteArrayToStringValue();
+
+            Work.Text = ciphertext;
         }
     }
 }

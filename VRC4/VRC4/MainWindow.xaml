@@ -20,7 +20,7 @@
         <TextBox Grid.Column="1" Grid.Row="1" Name="keyBox"/>
         <TextBlock Grid.Column="0" Grid.Row="2" Text="J: "/>
         <TextBox Grid.Column="1" Grid.Row="2" Name="jBox"/>
-        <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Name="Work"/>
+        <TextBox Style="{StaticResource blockMockup}" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Name="Work"/>
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right">
             <Button Name="Cipher" Click="Cipher_Click">
                 Cipher

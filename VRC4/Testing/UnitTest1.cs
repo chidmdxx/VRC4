@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VRC4.Model;
+using System.Text;
 
 namespace Testing
 {
@@ -11,11 +12,11 @@ namespace Testing
         public void TestMethod1()
         {
             string M = "HI";
-            string key = "test";
+            byte[] key = { 1, 7, 1, 7 };
             var test = new RC4() { Key=key};
-            test.Cipher(M);
+            test.Cipher(Encoding.ASCII.GetBytes(M),4);
 
-            Assert.AreEqual("0123456789ABCDEF", test.Plaintext, true);
+            Assert.AreEqual("4B48", test.Plaintext.ByteArrayToStringValue(), true);
         }
     }
 }

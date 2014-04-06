@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace VRC4.Model
 {
-    static class Helper
+    public static class Helper
     {
         public static bool Bit(this BitArray bits, int index) //hace que la little endian class de BitArray se lea como big endian
         {
