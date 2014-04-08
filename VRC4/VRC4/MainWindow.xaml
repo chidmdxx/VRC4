@@ -6,6 +6,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -15,13 +16,16 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="0" Grid.Row="0" Text="Text: "/>
-        <TextBox Grid.Column="1" Grid.Row="0" Name="textBox"/>
+        <TextBox Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="0" Name="textBox"/>
         <TextBlock Grid.Column="0" Grid.Row="1" Text="Key: "/>
-        <TextBox Grid.Column="1" Grid.Row="1" Name="keyBox"/>
+        <TextBox  Grid.Column="1" Grid.Row="1" Name="keyBox"/>
+        <CheckBox VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" Name="randomKey" IsChecked="False" Click="randomKey_Click">
+            Random
+        </CheckBox>
         <TextBlock Grid.Column="0" Grid.Row="2" Text="J: "/>
-        <TextBox Grid.Column="1" Grid.Row="2" Name="jBox"/>
-        <TextBox Style="{StaticResource blockMockup}" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Name="Work"/>
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right">
+        <TextBox Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="2" Name="jBox"/>
+        <TextBox Style="{StaticResource blockMockup}" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Name="Work"/>
+        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right">
             <Button Name="Cipher" Click="Cipher_Click">
                 Cipher
             </Button>
