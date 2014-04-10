@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace VRC4.Model
 {
@@ -22,6 +23,9 @@ namespace VRC4.Model
             Plaintext = plaintext;
             Ciphertext = new byte[plaintext.Length];
             Work = string.Empty;
+
+            Work += string.Format("input: {0}{1}",plaintext.ByteArrayToStringValue(),Environment.NewLine);
+
             int keyLenght = Key.Length;
             int count = 0;
             foreach (var letter in plaintext)
@@ -37,6 +41,7 @@ namespace VRC4.Model
                     ((byte)ascii).ToString(), k.ToString());
 
             }
+            Work += string.Format("output: {0}{1}", Ciphertext.ByteArrayToStringValue(), Environment.NewLine);
             return Ciphertext;
         }
 
@@ -45,6 +50,9 @@ namespace VRC4.Model
             Ciphertext = ciphertext;
             Plaintext = new byte[ciphertext.Length];
             Work = string.Empty;
+
+            Work += string.Format("input: {0}{1}", ciphertext.ByteArrayToStringValue(), Environment.NewLine);
+
             int keyLenght = Key.Length;
             int count = 0;
             foreach (var letter in ciphertext)
@@ -61,6 +69,7 @@ namespace VRC4.Model
                     ((byte)ascii).ToString(), k.ToString());
 
             }
+            Work += string.Format("output: {0}{1}", Plaintext.ByteArrayToStringValue(), Environment.NewLine);
             return Plaintext;
         }
     }

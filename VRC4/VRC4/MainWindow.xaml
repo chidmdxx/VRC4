@@ -24,7 +24,7 @@
         </CheckBox>
         <TextBlock Grid.Column="0" Grid.Row="2" Text="J: "/>
         <TextBox Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="2" Name="jBox"/>
-        <TextBox Style="{StaticResource blockMockup}" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Name="Work"/>
+        <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{StaticResource blockMockup}" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Name="Work"/>
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right">
             <Button Name="Cipher" Click="Cipher_Click">
                 Cipher

@@ -134,10 +134,17 @@ namespace VRC4.Model
             return bytes;
         }
 
-        public static string ByteArrayToStringValue(this byte[] bytes)
+        public static string ByteArrayToStringValue(this byte[] bytes, bool separacion=false)
         {
             string hex = BitConverter.ToString(bytes);
-            return hex.Replace("-", "");
+            if (!separacion)
+            {
+                return hex.Replace("-", "");
+            }
+            else
+            {
+                return hex.Replace("-", " ");
+            }
         }
 
         public static string ByteArrayToStringValue(this byte bytes)

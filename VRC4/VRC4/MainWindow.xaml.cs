@@ -19,11 +19,16 @@ namespace VRC4
         }
         private void Cipher_Click(object sender, RoutedEventArgs e)
         {
+            StringBuilder work = new StringBuilder();
             int j = int.Parse(jBox.Text);
             string c1Text = textBox.Text.Substring(0, j);
             string c2Text = textBox.Text.Substring(j);
             byte[] c1 = Encoding.ASCII.GetBytes(c1Text);
             byte[] c2 = Encoding.ASCII.GetBytes(c2Text);
+
+            work.AppendFormat("j: {0}{1}", j, Environment.NewLine);
+            work.AppendFormat("c1: {0}{1}", c1Text, Environment.NewLine);
+            work.AppendFormat("c2: {0}{1}", c2Text, Environment.NewLine);
 
             byte[] k1;
             byte[] k2;
@@ -31,6 +36,10 @@ namespace VRC4
             {
                 string k1Text = keyBox.Text.Substring(0, j);
                 string k2Text = keyBox.Text.Substring(j);
+
+                work.AppendFormat("k1: {0}{1}", k1Text, Environment.NewLine);
+                work.AppendFormat("k2: {0}{1}", k2Text, Environment.NewLine);
+
                 k1 = Encoding.ASCII.GetBytes(k1Text);
                 k2 = Encoding.ASCII.GetBytes(k2Text);
             }
@@ -39,10 +48,13 @@ namespace VRC4
                 List<byte> allBytes = keyBox.Text.StringToByteArray().ToList();
                 k1 = allBytes.Take(j).ToArray();
                 k2 = allBytes.Skip(j).Take(allBytes.Count - j).ToArray();
+
+                work.AppendFormat("k1: {0}{1}", k1.ByteArrayToStringValue(true), Environment.NewLine);
+                work.AppendFormat("k2: {0}{1}", k2.ByteArrayToStringValue(true), Environment.NewLine);
             }
             
 
-            string ciphertext;
+            
 
             var rc4 = new RC4() { Key = k1 };
             var vigenere = new Vigenere() { Key = k1 };
@@ -51,6 +63,9 @@ namespace VRC4
             vigenere.Cipher(c1);
             c1 = vigenere.Ciphertext;
 
+            work.AppendFormat("c1 RC4 {0}{1}{0}", Environment.NewLine, rc4.Work);
+            work.AppendFormat("c1 Vigenere {0}{1}{0}", Environment.NewLine, vigenere.Work);
+
             rc4.Key = k2;
             vigenere.Key = k2;
             rc4.Cipher(c2);
@@ -58,25 +73,30 @@ namespace VRC4
             vigenere.Cipher(c2);
             c2 = vigenere.Ciphertext;
 
+            work.AppendFormat("c2 RC4 {0}{1}{0}", Environment.NewLine, rc4.Work);
+            work.AppendFormat("c2 Vigenere {0}{1}{0}", Environment.NewLine, vigenere.Work);
 
-            ciphertext = c1.ByteArrayToStringValue() + c2.ByteArrayToStringValue() + ((byte)j).ByteArrayToStringValue();
+            work.AppendFormat("Result: {0}{1}",c1.ByteArrayToStringValue() + c2.ByteArrayToStringValue() + ((byte)j).ByteArrayToStringValue(),
+                Environment.NewLine);
 
-            Work.Text = ciphertext;
+            Work.Text = work.ToString();
         }
 
         private void Decipher_Click(object sender, RoutedEventArgs e)
         {
+            StringBuilder work = new StringBuilder();
             int j = 0;
-            List<byte> allBytes = textBox.Text.StringToByteArray().ToList();
+            List<byte> allBytes = textBox.Text.StringToByteArray().ToList(); //lee el input como bytes
             jBox.Text = "";
-            j = allBytes[allBytes.Count - 1];
+            j = allBytes[allBytes.Count - 1]; //lee el ultimo y lo remueve
             allBytes.RemoveAt(allBytes.Count - 1);
-            //string c1Text = textBox.Text.Substring(0, j);
-            //string c2Text = textBox.Text.Substring(j);
-            
 
             byte[] c1 = allBytes.Take(j).ToArray();
-            byte[] c2 = allBytes.Skip(j).Take(allBytes.Count - j).ToArray();
+            byte[] c2 = allBytes.Skip(j).Take(allBytes.Count - j).ToArray(); //salta c1
+
+            work.AppendFormat("j: {0}{1}", j, Environment.NewLine);
+            work.AppendFormat("c1: {0}{1}", c1.ByteArrayToStringValue(true), Environment.NewLine);
+            work.AppendFormat("c2: {0}{1}", c2.ByteArrayToStringValue(true), Environment.NewLine);
 
             byte[] k1;
             byte[] k2;
@@ -84,6 +104,10 @@ namespace VRC4
             {
                 string k1Text = keyBox.Text.Substring(0, j);
                 string k2Text = keyBox.Text.Substring(j);
+
+                work.AppendFormat("k1: {0}{1}", k1Text, Environment.NewLine);
+                work.AppendFormat("k2: {0}{1}", k2Text, Environment.NewLine);
+
                 k1 = Encoding.ASCII.GetBytes(k1Text);
                 k2 = Encoding.ASCII.GetBytes(k2Text);
             }
@@ -92,9 +116,10 @@ namespace VRC4
                 allBytes = keyBox.Text.StringToByteArray().ToList();
                 k1 = allBytes.Take(j).ToArray();
                 k2 = allBytes.Skip(j).Take(allBytes.Count - j).ToArray();
-            }
 
-            string ciphertext;
+                work.AppendFormat("k1: {0}{1}", k1.ByteArrayToStringValue(true), Environment.NewLine);
+                work.AppendFormat("k2: {0}{1}", k2.ByteArrayToStringValue(true), Environment.NewLine);
+            }
 
             var rc4 = new RC4() { Key = k1 };
             var vigenere = new Vigenere() { Key = k1 };
@@ -103,6 +128,8 @@ namespace VRC4
             rc4.Decipher(c1);
             c1 = rc4.Plaintext;
 
+            work.AppendFormat("c1 RC4 {0}{1}{0}", Environment.NewLine, rc4.Work);
+            work.AppendFormat("c1 Vigenere {0}{1}{0}", Environment.NewLine, vigenere.Work);
 
             rc4.Key = k2;
             vigenere.Key = k2;
@@ -111,11 +138,13 @@ namespace VRC4
             rc4.Decipher(c2);
             c2 = rc4.Plaintext;
 
+            work.AppendFormat("c2 RC4 {0}{1}{0}", Environment.NewLine, rc4.Work);
+            work.AppendFormat("c2 Vigenere {0}{1}{0}", Environment.NewLine, vigenere.Work);
 
+            work.AppendFormat("Result: {0}{1}", c1.ByteArrayToString() + c2.ByteArrayToString(),
+                Environment.NewLine);
 
-            ciphertext = c1.ByteArrayToString() + c2.ByteArrayToString();
-
-            Work.Text = ciphertext;
+            Work.Text = work.ToString();
         }
 
         private void randomKey_Click(object sender, RoutedEventArgs e)
