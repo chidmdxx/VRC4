@@ -37,7 +37,7 @@ namespace VRC4.Model
                 ascii %= 256; //byte
 
                 Ciphertext[count++] = (byte)ascii;
-                Work += string.Format("{0}. Replaced {1} for {2} with key letter {3} \n", count, letter.ToString(),
+                Work += string.Format("{0}. Replaced {1} for {2} with key byte {3} \n", count, letter.ToString(),
                     ((byte)ascii).ToString(), k.ToString());
 
             }
@@ -65,7 +65,7 @@ namespace VRC4.Model
                 ascii %= 256;
 
                 Plaintext[count++] = (byte)ascii;
-                Work += string.Format("{0}. Replaced {1} for {2} with key letter {3} \n", count, letter.ToString(),
+                Work += string.Format("{0}. Replaced {1} for {2} with key byte {3} \n", count, letter.ToString(),
                     ((byte)ascii).ToString(), k.ToString());
 
             }
